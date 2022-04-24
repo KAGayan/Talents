@@ -1,16 +1,13 @@
-import React from 'react';
-import './App.css';
+import { ReactElement } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import './styles/index.scss';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-        Talents
-        </p>
-      </header>
-    </div>
-  );
-}
+const App = (): ReactElement => (
+  <Container>
+    <Row>
+      <Col>Talents</Col>
+    </Row>
+  </Container>
+);
 
 export default App;
