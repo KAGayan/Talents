@@ -4,6 +4,8 @@ name: Build and Test React Application
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
+    paths:
+    - "web-app/"
     branches: [ main ]
   pull_request:
     branches: [ main ]
