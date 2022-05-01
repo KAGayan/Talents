@@ -1,12 +1,9 @@
-name: Build and Test React Application
+name: Build and Test web Application
 
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
     paths:
       - web-app/**
 
