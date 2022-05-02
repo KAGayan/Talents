@@ -1,9 +1,9 @@
-import { agencySliceReducer, agencySliceActions } from './AgencySlice';
+import { userSliceReducer, userSliceActions } from './UserSlice';
 
 export const reducer = {
-  agencySliceReducer,
+  userSliceReducer,
 };
 
 export const actions = {
-  ...agencySliceActions,
+  ...userSliceActions,
 };

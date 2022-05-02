@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { env } from 'config';
-import { Agency } from './agency';
+import { User } from './user';
 
 const instance = axios.create({
   baseURL: env.BASE_URL,
@@ -15,5 +15,5 @@ export const apiRequest = {
 };
 
 export const apiService = {
-  Agency,
+  User,
 };
