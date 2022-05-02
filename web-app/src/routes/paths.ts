@@ -3,15 +3,10 @@ export const AUTH_PATHS = {
   signUpPage: '/signup',
 };
 
-export const APP_PATHS = {
-  agency: 'agency',
-  applicant: 'applicant',
-};
-
 export const AGENCY_PATHS = {
-  home: '/',
+  home: '/agency',
 };
 
 export const APPLICANT_PATHS = {
-  home: '/',
+  home: '/applicant',
 };

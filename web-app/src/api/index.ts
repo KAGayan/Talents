@@ -4,6 +4,10 @@ import { User } from './user';
 
 const instance = axios.create({
   baseURL: env.BASE_URL,
+  headers: {
+    Accept: 'application/json',
+    Authorization: `bearer ${env.API_KEY}`,
+  },
 });
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;

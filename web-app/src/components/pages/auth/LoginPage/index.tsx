@@ -1,6 +1,17 @@
 import { Copyright } from '@mui/icons-material';
 import {
-  Avatar, Box, Button, Checkbox, Container, FormControlLabel, Grid, Link, TextField, Typography,
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  FormControlLabel,
+  Grid,
+  Link,
+  Stack,
+  TextField,
+  Typography,
 } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
 import { useForm, SubmitHandler } from 'react-hook-form';
@@ -9,6 +20,7 @@ import * as yup from 'yup';
 import { PageContainer } from 'components';
 import { AUTH_PATHS } from 'routes';
 import { emailSchema, passwordSchema } from 'utils';
+import { useActions, useMappedState } from 'hooks';
 
 interface Inputs {
   email: string,
@@ -21,12 +33,23 @@ const schema = yup.object({
 }).required();
 
 export const LoginPage = () => {
+  const { login } = useActions();
+  const {
+    loading, error,
+  } = useMappedState((state) => state.user);
   const {
     register, handleSubmit, formState: { errors },
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    const request = {
+      username: data.email,
+      password: data.password,
+    };
+    login(request);
+  };
 
   return (
     <PageContainer>
@@ -45,6 +68,13 @@ export const LoginPage = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {error && (
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity="error">
+              {error}
+            </Alert>
+          </Stack>
+          )}
           <Box
             component="form"
             onSubmit={handleSubmit(onSubmit)}
@@ -52,6 +82,7 @@ export const LoginPage = () => {
             sx={{ mt: 1 }}
           >
             <TextField
+              disabled={loading}
               margin="normal"
               required
               fullWidth
@@ -65,6 +96,7 @@ export const LoginPage = () => {
               helperText={!!errors.email && errors.email.message}
             />
             <TextField
+              disabled={loading}
               margin="normal"
               required
               fullWidth
@@ -78,7 +110,13 @@ export const LoginPage = () => {
               helperText={!!errors.password && 'Password is required'}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={(
+                <Checkbox
+                  value="remember"
+                  color="primary"
+                  disabled={loading}
+                />
+            )}
               label="Remember me"
             />
             <Button
@@ -86,6 +124,7 @@ export const LoginPage = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              disabled={loading}
             >
               Sign In
             </Button>
