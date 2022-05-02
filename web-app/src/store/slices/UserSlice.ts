@@ -1,41 +1,62 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { apiService } from 'api';
-import { User } from 'types';
+import { Auth, LoginReqest, User } from 'types';
 
-export const getUserById = createAsyncThunk(
-  'user/getUser',
-  async (userID: string) => {
-    const getUserInfo = await apiService.User.getUser(userID);
+export const login = createAsyncThunk(
+  'user/login',
+  async (user: LoginReqest) => {
+    const getUserInfo = await apiService.User.login(user);
     return getUserInfo;
   },
 );
 
 interface UserState {
-  user?: User,
-  loading: boolean,
+  user?: User;
+  auth?: Auth;
+  loading: boolean;
+  error?: string;
 }
 
 const initialState: UserState = {
   user: undefined,
+  auth: undefined,
   loading: false,
+  error: undefined,
 };
 
 const UserSlice = createSlice({
-  name: 'getUser',
+  name: 'login',
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.user = undefined;
+      state.auth = undefined;
+      state.loading = false;
+      state.error = undefined;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getUserById.pending, (state) => {
+      .addCase(login.pending, (state) => {
+        state.user = undefined;
+        state.auth = undefined;
         state.loading = true;
+        state.error = undefined;
       })
-      .addCase(getUserById.fulfilled, (state, action) => {
+      .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.user;
+        state.auth = action.payload.auth;
         state.loading = false;
+        state.error = undefined;
+      }).addCase(login.rejected, (state) => {
+        state.user = undefined;
+        state.auth = undefined;
+        state.loading = false;
+        state.error = 'An error occurred please try again.';
       });
   },
 });
 
-export const userSliceReducer = UserSlice.reducer;
+export const userReducer = UserSlice.reducer;
 
-export const userSliceActions = { getUserById };
+export const userActions = { login, ...UserSlice.actions };

@@ -1,4 +1,5 @@
 import { Container, Stack } from '@mui/material';
+import { useMappedState } from 'hooks';
 import { ReactElement } from 'react';
 import { Header } from '../Header';
 import ScrollToTop from '../Scroll';
@@ -10,13 +11,14 @@ interface Props {
 }
 
 export const PageContainer = ({ children, showBackBtn }: Props) => {
-  const authencticatedUser = false;
+  const { auth, user } = useMappedState((state) => state.user);
+
   return (
     <Stack sx={{
       ...classes.container,
     }}
     >
-      {authencticatedUser && <Header name="User Name" showBackBtn={showBackBtn} />}
+      {auth?.isAuthenticated && <Header name={`${user?.name}`} showBackBtn={showBackBtn} />}
       <Stack
         sx={{
           ...classes.childrenWrapper,

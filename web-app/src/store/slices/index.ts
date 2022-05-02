@@ -1,9 +1,9 @@
-import { userSliceReducer, userSliceActions } from './UserSlice';
+import { userReducer, userActions } from './UserSlice';
 
 export const reducer = {
-  userSliceReducer,
+  user: userReducer,
 };
 
 export const actions = {
-  ...userSliceActions,
+  ...userActions,
 };
