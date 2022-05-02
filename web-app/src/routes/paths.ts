@@ -1,5 +1,6 @@
 export const AUTH_PATHS = {
   login: '/login',
+  signUpPage: '/signup',
 };
 
 export const APP_PATHS = {
