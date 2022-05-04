@@ -1,18 +1,17 @@
+import ReactDOMServer from 'react-dom/server';
+import JsPDF from 'jspdf';
 import {
-  AppBar, Avatar, Button, Container, IconButton, Menu, MenuItem, Stack, Toolbar,
+  AppBar, Avatar, Button, Container, Menu, MenuItem, Stack, Toolbar, Typography,
 } from '@mui/material';
-import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
-import { useNavigate } from 'react-router-dom';
 import { useActions } from 'hooks';
 import { MouseEvent, useState } from 'react';
 
+const doc = new JsPDF();
 interface Props {
     name: string;
-    showBackBtn?: boolean;
 }
 
-export const Header = ({ name, showBackBtn }: Props) => {
-  const navigate = useNavigate();
+export const Header = ({ name }: Props) => {
   const { logout } = useActions();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -24,29 +23,37 @@ export const Header = ({ name, showBackBtn }: Props) => {
     setAnchorEl(null);
   };
 
+  const download = () => {
+    handleClose();
+    doc.html(ReactDOMServer.renderToStaticMarkup(
+      <div style={{ padding: '20px' }}>
+        <h4>{name}</h4>
+        <p>Boday Text</p>
+      </div>,
+    ), {
+      callback: () => doc.save('gaanCV.pdf'),
+    });
+  };
+
   return (
     <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Stack
-            alignItems="flex-start"
             flex={1}
+            flexDirection="row"
+            alignItems="flex-start"
+
           >
-            {showBackBtn && (
-            <IconButton
-              onClick={() => navigate(-1)}
+            <Typography
+              variant="h5"
             >
-              <ArrowBackIosNewOutlinedIcon sx={{
-                color: 'white',
-              }}
-              />
-            </IconButton>
-            )}
+              Talents
+            </Typography>
           </Stack>
           <Stack
             flex={1}
             flexDirection="row"
-            alignItems="center"
             justifyContent="flex-end"
           >
             <Button
@@ -60,11 +67,14 @@ export const Header = ({ name, showBackBtn }: Props) => {
               {name}
             </Button>
             <Avatar
-              alt={name}
               sx={{
+                color: 'blue',
+                bgcolor: 'white',
                 marginLeft: 1,
               }}
-            />
+            >
+              {name.charAt(0)}
+            </Avatar>
             <Menu
               id="basic-menu"
               anchorEl={anchorEl}
@@ -75,6 +85,7 @@ export const Header = ({ name, showBackBtn }: Props) => {
               }}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
+              <MenuItem onClick={download}>Download CV</MenuItem>
               <MenuItem onClick={logout}>Logout</MenuItem>
             </Menu>
           </Stack>
