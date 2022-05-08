@@ -9,7 +9,13 @@ export interface User {
 
 export interface LoginReqest {
     username: string;
-    password: string
+    password: string;
+}
+export interface RegisterReqest {
+    accountType: string;
+    confirmPassword:string;
+    email: string;
+    newPassword: string;
 }
 
 export interface Auth {

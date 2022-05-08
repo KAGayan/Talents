@@ -1,8 +1,8 @@
 import { Copyright } from '@mui/icons-material';
 import {
+  Alert,
   Avatar,
   Box,
-  Button,
   Checkbox,
   Container,
   FormControl,
@@ -14,17 +14,22 @@ import {
   MenuItem,
   Select,
   SelectChangeEvent,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
 import * as yup from 'yup';
 import { PageContainer } from 'components/molecule';
-import { AUTH_PATHS } from 'routes';
+import { AGENCY_PATHS, APPLICANT_PATHS, AUTH_PATHS } from 'routes';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { emailSchema, passwordSchema } from 'utils';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useActions, useMappedState } from 'hooks';
+import { useNavigate } from 'react-router-dom';
+import { USER_TYPE } from 'constant';
+import { LoadingButton } from '@mui/lab';
 
 interface Inputs {
   accountType: string,
@@ -42,6 +47,11 @@ const schema = yup.object({
 }).required();
 
 export const SignUpPage = () => {
+  const navigate = useNavigate();
+  const {
+    loading, error, auth, user,
+  } = useMappedState((state) => state.user);
+  const { register: userRegiste } = useActions();
   const [accountType, setAccountType] = useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -53,7 +63,17 @@ export const SignUpPage = () => {
   } = useForm<Inputs>({
     resolver: yupResolver(schema),
   });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => userRegiste(data);
+
+  useEffect(() => {
+    if (auth?.isAuthenticated && user?.userType === USER_TYPE.agency) {
+      navigate(AGENCY_PATHS.home, { replace: true });
+    }
+
+    if (auth?.isAuthenticated && user?.userType === USER_TYPE.applicant) {
+      navigate(APPLICANT_PATHS.home, { replace: true });
+    }
+  }, [auth, user]);
 
   return (
     <PageContainer>
@@ -72,6 +92,13 @@ export const SignUpPage = () => {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
+          {error && (
+          <Stack sx={{ width: '100%' }} spacing={2}>
+            <Alert severity="error">
+              {error.message}
+            </Alert>
+          </Stack>
+          )}
           <Box
             onSubmit={handleSubmit(onSubmit)}
             component="form"
@@ -81,6 +108,7 @@ export const SignUpPage = () => {
             <FormControl fullWidth>
               <InputLabel id="account-type-label">Choose account type</InputLabel>
               <Select
+                disabled={loading}
                 labelId="account-type-label"
                 id="accountType"
                 value={accountType}
@@ -105,6 +133,7 @@ export const SignUpPage = () => {
               </FormHelperText>
             </FormControl>
             <TextField
+              disabled={loading}
               margin="normal"
               required
               fullWidth
@@ -117,6 +146,7 @@ export const SignUpPage = () => {
               helperText={!!errors.email && errors.email.message}
             />
             <TextField
+              disabled={loading}
               margin="normal"
               required
               fullWidth
@@ -130,6 +160,7 @@ export const SignUpPage = () => {
               helperText={!!errors.newPassword && errors.newPassword.message}
             />
             <TextField
+              disabled={loading}
               margin="normal"
               required
               fullWidth
@@ -146,14 +177,15 @@ export const SignUpPage = () => {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              loading={loading}
             >
               Sign Up
-            </Button>
+            </LoadingButton>
             <Grid container>
               <Grid item xs display="flex" justifyContent="flex-end">
                 <Link href={AUTH_PATHS.login} variant="body2">

@@ -11,10 +11,10 @@ export const ResumeDownload = (name: string, resume: Resume) => {
       <div>
         {resume.skillsList?.map((skill) => (
           <div
-            key={skill}
+            key={skill.id}
           >
-            <span id={skill}>
-              {skill}
+            <span id={skill.id}>
+              {skill.title}
             </span>
           </div>
         ))}
