@@ -1,18 +1,21 @@
+import { AddCircleOutline, DeleteOutlineRounded } from '@mui/icons-material';
 import {
   Box,
   Button,
   Checkbox,
   Chip,
   FormControl,
+  IconButton,
   InputLabel,
   ListItemText,
   MenuItem,
   OutlinedInput,
   Select,
   Stack,
+  TextField,
   Typography,
 } from '@mui/material';
-import { CardItem, PageContainer } from 'components/molecule';
+import { CardItem, PageContainer, YearSelect } from 'components/molecule';
 import { useMappedState } from 'hooks';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -111,11 +114,31 @@ export const EditResumePage = () => {
             ))}
           </Select>
         </FormControl>
-        <Typography
-          variant="subtitle2"
+        <Stack
+          direction="row"
+          alignItems="center"
+          spacing={1}
         >
-          Work Experience
-        </Typography>
+          <Typography
+            variant="subtitle2"
+          >
+            Work Experience
+          </Typography>
+          <IconButton
+            onClick={() => setExperiences([...experiences, {
+              id: '',
+              designation: {
+                id: '',
+                title: '',
+              },
+              from: '',
+              to: '',
+              description: '',
+            }])}
+          >
+            <AddCircleOutline />
+          </IconButton>
+        </Stack>
         <Stack
           spacing={2}
         >
@@ -123,43 +146,82 @@ export const EditResumePage = () => {
             <CardItem
               key={ex.id}
               title={(
-                <FormControl
-                  fullWidth
-                  sx={{
-                    mb: 2,
-                  }}
+                <Stack
+                  direction="row"
+                  alignItems="center"
+                  spacing={2}
                 >
-                  <InputLabel id="designations-label">Choose designation</InputLabel>
-                  <Select
-                    labelId="designations-label"
-                    id="designations"
-                    value={ex.designation.id}
-                    label="Choose designation"
+                  <FormControl
+                    fullWidth
+                    sx={{
+                      mb: 2,
+                    }}
                   >
-                    {resumeData.designations.map((des) => (
-                      <MenuItem
-                        key={des.id}
-                        value={des.id}
-                        onClick={() => {
-                          setExperiences(
+                    <InputLabel id="designations-label">Choose designation</InputLabel>
+                    <Select
+                      labelId="designations-label"
+                      id="designations"
+                      value={ex.designation.id}
+                      label="Choose designation"
+                    >
+                      {resumeData.designations.map((des) => (
+                        <MenuItem
+                          key={des.id}
+                          value={des.id}
+                          onClick={() => setExperiences(
                             experiences.map((e, index) => (currI === index
                               ? { ...e, designation: des } : e)),
-                          );
-                        }}
-                      >
-                        {des.title}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
+                          )}
+                        >
+                          {des.title}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <IconButton
+                    onClick={() => setExperiences(experiences.filter((e, i) => (currI !== i)))}
+                  >
+                    <DeleteOutlineRounded />
+                  </IconButton>
+                </Stack>
               )}
-              subheader={`${ex.from} ${ex.to}`}
+              subheader={(
+                <Stack
+                  direction="row"
+                  spacing={2}
+                >
+                  <YearSelect
+                    lable="From"
+                    selectedYear={ex.from}
+                    onSelect={(year) => setExperiences(
+                      experiences.map((e, index) => (currI === index
+                        ? { ...e, from: year } : e)),
+                    )}
+                  />
+                  <YearSelect
+                    lable="To"
+                    isTo
+                    selectedYear={ex.to}
+                    onSelect={(year) => setExperiences(
+                      experiences.map((e, index) => (currI === index
+                        ? { ...e, to: year } : e)),
+                    )}
+                  />
+                </Stack>
+              )}
             >
-              <Typography
-                variant="body1"
-              >
-                {ex.description}
-              </Typography>
+              <TextField
+                id="job-description"
+                label="Description"
+                multiline
+                fullWidth
+                rows={4}
+                value={ex.description}
+                onChange={(e) => setExperiences(
+                  experiences.map((expe, index) => (currI === index
+                    ? { ...expe, description: e.target.value } : expe)),
+                )}
+              />
             </CardItem>
           ))}
         </Stack>
