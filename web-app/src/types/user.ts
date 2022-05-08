@@ -2,8 +2,8 @@ export type UserType = 'Agency' | 'Applicant';
 
 export interface User {
     id: string;
-    firstName: string;
-    lastName: string;
+    firstName?: string;
+    lastName?: string;
     userType: UserType;
 }
 
