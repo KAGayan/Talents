@@ -3,7 +3,6 @@ import {
   Alert,
   Avatar,
   Box,
-  Button,
   Checkbox,
   Container,
   FormControlLabel,
@@ -13,14 +12,18 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import LockIcon from '@mui/icons-material/Lock';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { PageContainer } from 'components';
-import { AUTH_PATHS } from 'routes';
+import { AGENCY_PATHS, APPLICANT_PATHS, AUTH_PATHS } from 'routes';
 import { emailSchema, passwordSchema } from 'utils';
 import { useActions, useMappedState } from 'hooks';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { USER_TYPE } from 'constant';
 
 interface Inputs {
   email: string,
@@ -33,10 +36,12 @@ const schema = yup.object({
 }).required();
 
 export const LoginPage = () => {
-  const { login } = useActions();
+  const navigate = useNavigate();
   const {
-    loading, error,
+    loading, error, auth, user,
   } = useMappedState((state) => state.user);
+  const { login } = useActions();
+
   const {
     register, handleSubmit, formState: { errors },
   } = useForm<Inputs>({
@@ -50,6 +55,16 @@ export const LoginPage = () => {
     };
     login(request);
   };
+
+  useEffect(() => {
+    if (auth?.isAuthenticated && user?.userType === USER_TYPE.agency) {
+      navigate(AGENCY_PATHS.home, { replace: true });
+    }
+
+    if (auth?.isAuthenticated && user?.userType === USER_TYPE.applicant) {
+      navigate(APPLICANT_PATHS.home, { replace: true });
+    }
+  }, [auth, user]);
 
   return (
     <PageContainer>
@@ -71,7 +86,7 @@ export const LoginPage = () => {
           {error && (
           <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity="error">
-              {error}
+              {error.message}
             </Alert>
           </Stack>
           )}
@@ -119,15 +134,15 @@ export const LoginPage = () => {
             )}
               label="Remember me"
             />
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={loading}
+              loading={loading}
             >
               Sign In
-            </Button>
+            </LoadingButton>
             <Grid container>
               <Grid item xs>
                 <Link href="/" variant="body2">

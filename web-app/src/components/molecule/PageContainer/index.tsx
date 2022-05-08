@@ -1,4 +1,6 @@
-import { Container, IconButton, Stack } from '@mui/material';
+import {
+  Container, IconButton, Stack,
+} from '@mui/material';
 import ArrowBackIosNewOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import { useMappedState } from 'hooks';
 import { ReactElement } from 'react';
@@ -9,10 +11,11 @@ import { classes } from './styles';
 
 interface Props {
     children: ReactElement | ReactElement[],
+    compact?: boolean;
     showBackBtn?: boolean;
 }
 
-export const PageContainer = ({ children, showBackBtn }: Props) => {
+export const PageContainer = ({ children, compact, showBackBtn }: Props) => {
   const navigate = useNavigate();
   const { auth, user } = useMappedState((state) => state.user);
 
@@ -22,28 +25,32 @@ export const PageContainer = ({ children, showBackBtn }: Props) => {
     }}
     >
       {auth?.isAuthenticated && <Header name={`${user?.firstName}`} />}
+      {showBackBtn && (
+      <Stack
+        position="fixed"
+        mt={8}
+        mb={2}
+        width="100%"
+        maxWidth={compact ? 'md' : 'xl'}
+      >
+        <IconButton
+          sx={{
+            width: 45,
+            mr: 1,
+          }}
+          onClick={() => navigate(-1)}
+        >
+          <ArrowBackIosNewOutlinedIcon />
+        </IconButton>
+      </Stack>
+      )}
       <Stack
         sx={{
           ...classes.childrenWrapper,
         }}
       >
         <ScrollToTop>
-          <Container maxWidth="xl">
-            <Stack
-              alignItems="flex-start"
-              flex={1}
-            >
-              {showBackBtn && (
-              <IconButton
-                onClick={() => navigate(-1)}
-              >
-                <ArrowBackIosNewOutlinedIcon sx={{
-                  color: 'white',
-                }}
-                />
-              </IconButton>
-              )}
-            </Stack>
+          <Container maxWidth={compact ? 'md' : 'xl'}>
             {children}
           </Container>
         </ScrollToTop>

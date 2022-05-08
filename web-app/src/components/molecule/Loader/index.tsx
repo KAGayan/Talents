@@ -1,12 +1,16 @@
 import CircularProgress from '@mui/material/CircularProgress';
 import { Grid } from '@mui/material';
 
-export const Loader = () => (
+interface Props {
+  fullHeight?: boolean
+}
+
+export const Loader = ({ fullHeight }: Props) => (
   <Grid
     container
     justifyContent="center"
     alignContent="center"
-    minHeight="100vh"
+    minHeight={fullHeight ? '100vh' : ''}
   >
     <CircularProgress />
   </Grid>

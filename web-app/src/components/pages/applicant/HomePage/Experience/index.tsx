@@ -1,9 +1,9 @@
 import { Stack, Typography } from '@mui/material';
 import { CardItem } from 'components/molecule';
-import { Experiences } from 'types';
+import { Experience as ExperienceType } from 'types';
 
 interface Props {
-  experiences?: Experiences[];
+  experiences?: ExperienceType[];
 }
 
 export const Experience = ({ experiences }: Props) => (
@@ -22,10 +22,15 @@ export const Experience = ({ experiences }: Props) => (
       {experiences?.map((ex) => (
         <CardItem
           key={ex.id}
-          title={ex.title}
+          title={ex.designation.title}
           subheader={`${ex.from} ${ex.to}`}
-          description={ex.description}
-        />
+        >
+          <Typography
+            variant="body1"
+          >
+            {ex.description}
+          </Typography>
+        </CardItem>
       ))}
     </Stack>
 
