@@ -103,6 +103,8 @@ namespace Talent.Controllers
 
         }
         [HttpPost]
+        // [ActionName("GetEmployeeByID")]
+        [HttpPost("Register")]
         public Models.TaskStatus AddEmployee(string UserName,string Password,int empType)
         {
             //int maxId = listEmp.Max(e => e.ID);  
