@@ -16,24 +16,26 @@ import {
   Typography,
 } from '@mui/material';
 import { CardItem, PageContainer, YearSelect } from 'components/molecule';
-import { useMappedState } from 'hooks';
-import { useState } from 'react';
+import { useMappedState, useResumeData } from 'hooks';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { APPLICANT_PATHS } from 'routes';
-import { resumeData } from './data';
+import { Sector } from 'types';
 
 export const EditResumePage = () => {
+  const { resumeData, setResumeData } = useResumeData();
   const { resume: { resume } } = useMappedState((state) => state);
 
-  const [sector, setAccountType] = useState(resume?.sector);
+  const [sector, setSectorType] = useState(resume?.sector);
   const [skills, setSkills] = useState(resume?.skillsList || []);
   const [experiences, setExperiences] = useState(resume?.experiences || []);
 
-  const saveResume = () => {
-    console.log({ sector, skills, experiences });
+  const onSectorSelect = async (sect: Sector) => {
+    setSectorType(sect);
+    setResumeData({ ...resumeData, selectedSector: sector });
   };
 
-  if (!resume) return null;
+  const saveResume = () => console.log({ sector, skills, experiences });
 
   return (
     <PageContainer
@@ -62,11 +64,11 @@ export const EditResumePage = () => {
             value={sector?.id}
             label="Choose sector"
           >
-            {resumeData.sectors.map((sect) => (
+            {resumeData?.sectors?.map((sect) => (
               <MenuItem
                 key={sect.id}
                 value={sect.id}
-                onClick={() => setAccountType(sect)}
+                onClick={() => onSectorSelect(sect)}
               >
                 {sect.title}
               </MenuItem>
@@ -97,7 +99,7 @@ export const EditResumePage = () => {
               </Box>
             )}
           >
-            {resumeData.skills.map((skill) => (
+            {resumeData?.skills?.map((skill) => (
               <MenuItem
                 key={skill.id}
                 value={skill.id}
@@ -164,7 +166,7 @@ export const EditResumePage = () => {
                       value={ex.designation.id}
                       label="Choose designation"
                     >
-                      {resumeData.designations.map((des) => (
+                      {resumeData?.designations?.map((des) => (
                         <MenuItem
                           key={des.id}
                           value={des.id}
