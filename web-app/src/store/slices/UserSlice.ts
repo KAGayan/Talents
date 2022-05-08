@@ -14,7 +14,7 @@ interface UserState {
   user?: User;
   auth?: Auth;
   loading: boolean;
-  error?: string;
+  error?: Error;
 }
 
 const initialState: UserState = {
@@ -48,11 +48,11 @@ const UserSlice = createSlice({
         state.auth = action.payload.auth;
         state.loading = false;
         state.error = undefined;
-      }).addCase(login.rejected, (state) => {
+      }).addCase(login.rejected, (state, action) => {
         state.user = undefined;
         state.auth = undefined;
         state.loading = false;
-        state.error = 'An error occurred please try again.';
+        state.error = new Error(action.error.message);
       });
   },
 });

@@ -5,7 +5,10 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -68,7 +71,23 @@
                 "tsx": "never"
             }
         ],
+        "@typescript-eslint/ban-types": [
+            "error",
+            {
+              "extendDefaults": true,
+              "types": {
+                "{}": false
+              }
+            }
+          ],
         "linebreak-style": 0,
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "no-unused-expressions": [
+            "error", 
+            { 
+                "allowShortCircuit": true, 
+                "allowTernary": true 
+            }
+        ]
     }
 }

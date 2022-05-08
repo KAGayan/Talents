@@ -1,7 +1,7 @@
 import { USER_TYPE } from 'constant';
 import { useMappedState } from 'hooks';
 import {
-  createContext, ReactElement, useEffect, useMemo,
+  createContext, ReactNode, useEffect, useMemo,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AGENCY_PATHS, APPLICANT_PATHS, AUTH_PATHS } from 'routes';
@@ -13,7 +13,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType>(null!);
 
-export const AuthProvider = ({ children }: { children: ReactElement }) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
   const {
     auth, user,

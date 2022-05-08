@@ -1,5 +1,5 @@
 import {
-  AgencyHomePage, ApplicantHomePage, LoginPage, SignUpPage,
+  AgencyHomePage, ApplicantHomePage, EditResumePage, LoginPage, SignUpPage,
 } from 'components';
 import { AuthProvider } from 'contexts';
 import { Routes, Route, BrowserRouter } from 'react-router-dom';
@@ -28,6 +28,10 @@ const App = () => (
         <Route
           path={APPLICANT_PATHS.home}
           element={<ApplicantHomePage />}
+        />
+        <Route
+          path={APPLICANT_PATHS.editResume}
+          element={<EditResumePage />}
         />
         <Route path="*" element={<LoginPage />} />
       </Routes>

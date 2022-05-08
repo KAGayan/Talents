@@ -1,38 +1,34 @@
-import ReactDOMServer from 'react-dom/server';
-import JsPDF from 'jspdf';
 import {
   AppBar, Avatar, Button, Container, Menu, MenuItem, Stack, Toolbar, Typography,
 } from '@mui/material';
-import { useActions } from 'hooks';
+import { useActions, useMappedState } from 'hooks';
 import { MouseEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { APPLICANT_PATHS } from 'routes';
+import { ResumeDownload } from '../ResumeDownload';
 
-const doc = new JsPDF();
 interface Props {
     name: string;
 }
 
 export const Header = ({ name }: Props) => {
-  const { logout } = useActions();
+  const { logout, clearResume } = useActions();
+  const { resume } = useMappedState((state) => state.resume);
+  const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const download = () => {
     handleClose();
-    doc.html(ReactDOMServer.renderToStaticMarkup(
-      <div style={{ padding: '20px' }}>
-        <h4>{name}</h4>
-        <p>Boday Text</p>
-      </div>,
-    ), {
-      callback: () => doc.save('gaanCV.pdf'),
-    });
+    if (resume) ResumeDownload(name, resume);
   };
 
   return (
@@ -85,8 +81,21 @@ export const Header = ({ name }: Props) => {
               }}
             >
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={download}>Download CV</MenuItem>
-              <MenuItem onClick={logout}>Logout</MenuItem>
+              <MenuItem
+                onClick={() => navigate(APPLICANT_PATHS.editResume)}
+              >
+                Edit CV
+              </MenuItem>
+              <MenuItem onClick={download}>
+                Download CV
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  logout(); clearResume();
+                }}
+              >
+                Logout
+              </MenuItem>
             </Menu>
           </Stack>
         </Toolbar>

@@ -1,26 +1,22 @@
 import {
   Card, CardContent, CardHeader, Typography,
 } from '@mui/material';
-import { ReactElement } from 'react';
+import { ReactElement, ReactNode } from 'react';
 
 interface Props {
-    title: string;
+    title: string | ReactNode;
     subheader?: string | number | ReactElement;
-    description?: string;
+    children?: ReactNode;
 }
 
-export const CardItem = ({ title, subheader, description }: Props) => (
+export const CardItem = ({ title, subheader, children }: Props) => (
   <Card>
     <CardHeader
       title={title}
       subheader={subheader}
     />
     <CardContent>
-      <Typography
-        variant="body1"
-      >
-        {description}
-      </Typography>
+      {children}
     </CardContent>
   </Card>
 );

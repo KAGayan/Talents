@@ -3,7 +3,6 @@ import {
   Alert,
   Avatar,
   Box,
-  Button,
   Checkbox,
   Container,
   FormControlLabel,
@@ -13,6 +12,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import LockIcon from '@mui/icons-material/Lock';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -71,7 +71,7 @@ export const LoginPage = () => {
           {error && (
           <Stack sx={{ width: '100%' }} spacing={2}>
             <Alert severity="error">
-              {error}
+              {error.message}
             </Alert>
           </Stack>
           )}
@@ -119,15 +119,15 @@ export const LoginPage = () => {
             )}
               label="Remember me"
             />
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              disabled={loading}
+              loading={loading}
             >
               Sign In
-            </Button>
+            </LoadingButton>
             <Grid container>
               <Grid item xs>
                 <Link href="/" variant="body2">

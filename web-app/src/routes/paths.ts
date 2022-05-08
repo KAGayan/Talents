@@ -9,4 +9,5 @@ export const AGENCY_PATHS = {
 
 export const APPLICANT_PATHS = {
   home: '/applicant',
+  editResume: '/applicant/resume/edit',
 };

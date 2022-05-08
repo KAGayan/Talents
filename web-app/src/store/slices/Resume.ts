@@ -26,6 +26,11 @@ const ResumeSlice = createSlice({
   name: 'resume',
   initialState,
   reducers: {
+    clearResume: (state) => {
+      state.resume = undefined;
+      state.loading = false;
+      state.error = undefined;
+    },
   },
   extraReducers: (builder) => {
     builder
