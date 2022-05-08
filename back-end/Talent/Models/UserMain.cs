@@ -7,9 +7,18 @@ namespace Talent.Models
 {
     public class UserMain
     {
-        public int EmployeeNumber { get; set; }
+        public int id { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
-        public int EmpType { get; set; }
+        public int userype { get; set; }
+        public string userType { get; set; }
+    }
+
+    public class LogTemp
+    {
+    
+        public string username { get; set; }
+        public string password { get; set; }
+  
     }
 }

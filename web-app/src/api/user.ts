@@ -3,7 +3,7 @@ import { LoginReqest, UserRespons } from 'types';
 
 export const User = {
   login: (loginReqest: LoginReqest) => apiRequest.post<UserRespons>(
-    '/login',
+    'auth/GetEmployeeByLoginPassword',
     loginReqest,
   ),
 };
