@@ -6,6 +6,8 @@ import { Resume } from './resume';
 const instance = axios.create({
   baseURL: env.BASE_URL,
   headers: {
+    'Cache-Control': 'no-cache',
+    'Content-Type': 'application/json',
     Accept: 'application/json',
     Authorization: `bearer ${env.API_KEY}`,
   },

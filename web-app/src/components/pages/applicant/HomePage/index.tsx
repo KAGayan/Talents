@@ -15,7 +15,7 @@ export const ApplicantHomePage = () => {
   const { getResume } = useActions();
 
   useEffect(() => {
-    !resume && getResume();
+    user && !resume && getResume();
   }, []);
 
   return (
