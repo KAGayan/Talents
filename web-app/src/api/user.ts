@@ -5,7 +5,7 @@ import {
 
 export const User = {
   login: (loginReqest: LoginReqest) => apiRequest.post<UserRespons>(
-    '/login',
+    'auth/GetEmployeeByLoginPassword',
     loginReqest,
   ),
   register: (registerReqest: RegisterReqest) => apiRequest.post<UserRespons>(

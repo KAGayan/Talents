@@ -11,5 +11,13 @@ namespace Talent.Models
         public string Message { get; set; }
 
         public UserMain User { get; set; }
+        public authentication auth { get; set; }
+    }
+    public class authentication
+    {
+        public bool isAuthenticated { get; set; }
+        public string token { get; set; }
+
+       // public UserMain User { get; set; }
     }
 }

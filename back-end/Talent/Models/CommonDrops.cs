@@ -39,4 +39,10 @@ namespace Talent.Models
         public int skillId { get; set; }
         public string skillDes { get; set; }
     }
+
+    public class Experience
+    {
+        public int experId { get; set; }
+        public string skillDes { get; set; }
+    }
 }
