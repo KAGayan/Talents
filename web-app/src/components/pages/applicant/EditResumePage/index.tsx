@@ -40,7 +40,7 @@ export const EditResumePage = () => {
   const [gCSEpassess, setGCSEpassess] = useState(0);
   const [academicQualification, setAcademicQualification] = useState<Qualification[]>([]);
   const [professionalQualification, setProfessionalQualification] = useState<Qualification[]>([]);
-  const [maximumEducationLevel, setMaximumEducationLevel] = useState<Qualification | null>();
+  const [maximumEducationLevel, setMaximumEducationLevel] = useState<Qualification | undefined>();
 
   const onSectorSelect = async (sect: Sector) => {
     setSectorType(sect);
@@ -68,6 +68,7 @@ export const EditResumePage = () => {
       gCSEpassess,
       academicQualification,
       professionalQualification,
+      maximumEducationLevel,
     };
     if (user?.id) {
       apiService.Resume.save(user.id, updatedResume).then(() => {
@@ -333,6 +334,32 @@ export const EditResumePage = () => {
                       </CardItem>
                     ))}
                   </Stack>
+                  <FormControl
+                    fullWidth
+                    sx={{
+                      mt: 2,
+                      mb: 2,
+                    }}
+                  >
+                    <InputLabel id="maximumEducationLevel-label">Maximum EducationLevel</InputLabel>
+                    <Select
+                      labelId="maximumEducationLevel-label"
+                      id="maximumEducationLevel"
+                      value={maximumEducationLevel?.id || ''}
+                      label="Maximum EducationLevel"
+                      disabled={!resumeData.isSectorsLoaded}
+                    >
+                      {resumeData?.maximumEducationLevel?.map((sect) => (
+                        <MenuItem
+                          key={sect.id}
+                          value={sect.id}
+                          onClick={() => setMaximumEducationLevel(sect)}
+                        >
+                          {sect.title}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                   <FormControl
                     fullWidth
                     sx={{

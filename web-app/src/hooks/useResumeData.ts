@@ -15,7 +15,7 @@ interface ResumeData {
     designations?: Designation[];
     academicQualification?: Qualification[];
     professionalQualification?: Qualification[];
-    maximumEducationLevel?: Qualification;
+    maximumEducationLevel?: Qualification[];
 }
 
 export const useResumeData = () => {
