@@ -5,11 +5,24 @@ using System.Threading.Tasks;
 
 namespace Talent.Models
 {
-    public class CV
+    public class profile
     {
-        public int EmployeeNumber { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public int EmpType { get; set; }
+        public string firstname { get; set; }
+        public string lastName { get; set; }
+        public string contactNumber { get; set; }
+        public string address { get; set; }
+    }
+
+    public class cv
+    {
+        public profile profile { get; set; }
+        public int gCSEpassess { get; set; }
+        public Sector sector { get; set; }
+        public List<Skill> skillsList { get; set; }
+        public List<Experience> experiences { get; set; }
+
+        public List<educationQual> academicQualification { get; set; }
+
+        public List<professionalQual> professionalQualification { get; set; }
     }
 }

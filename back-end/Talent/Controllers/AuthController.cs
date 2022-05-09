@@ -89,7 +89,14 @@ namespace Talent.Controllers
                     emp.UserName = reader.GetValue(1).ToString();
                     emp.Password = reader.GetValue(2).ToString();
                     emp.userype = Convert.ToInt32(reader.GetValue(3));
-                    emp.userType = "Applicant";
+                    if(emp.userype == 0)
+                    {
+                        emp.userType = "Applicant";
+                    }
+                    else
+                    {
+                        emp.userType = "Agency";
+                    } 
 
                     Status.Successfull = 1;
                     Status.Message = "Successful login";
