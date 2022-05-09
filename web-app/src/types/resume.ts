@@ -40,4 +40,5 @@ export interface Resume {
     experiences?: Experience[];
     academicQualification?: Qualification[];
     professionalQualification?: Qualification[];
+    maximumEducationLevel?: Qualification;
 }

@@ -23,6 +23,9 @@ export const Resume = {
   getSkills: (sectorId: string) => apiRequest.get<Skill[]>(
     `/CurriculumVitae/LoadSkill?sectorId=${sectorId}`,
   ),
+  getMaximumEducationLevel: () => apiRequest.get<Qualification>(
+    '/CurriculumVitae/LoadEduLevel',
+  ),
   save: (userId: string, body: ResumeRespons) => apiRequest.post<ResumeRespons>(
     'CurriculumVitae/save',
     {

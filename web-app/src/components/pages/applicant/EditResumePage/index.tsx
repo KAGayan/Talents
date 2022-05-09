@@ -40,6 +40,7 @@ export const EditResumePage = () => {
   const [gCSEpassess, setGCSEpassess] = useState(0);
   const [academicQualification, setAcademicQualification] = useState<Qualification[]>([]);
   const [professionalQualification, setProfessionalQualification] = useState<Qualification[]>([]);
+  const [maximumEducationLevel, setMaximumEducationLevel] = useState<Qualification | null>();
 
   const onSectorSelect = async (sect: Sector) => {
     setSectorType(sect);
@@ -54,6 +55,8 @@ export const EditResumePage = () => {
     resume?.academicQualification && setAcademicQualification(resume.academicQualification);
     resume?.professionalQualification
     && setProfessionalQualification(resume.professionalQualification);
+    resume?.maximumEducationLevel
+    && setMaximumEducationLevel(resume.maximumEducationLevel);
   }, [resumeData.skills]);
 
   const saveResume = async () => {
@@ -171,7 +174,7 @@ export const EditResumePage = () => {
                 ))}
               </Select>
             </FormControl>
-            {!resumeData.isOthersLoaded ? <Loader />
+            {resumeData.isSectorsLoaded && !resumeData.isOthersLoaded ? <Loader />
               : (
                 <>
                   <FormControl

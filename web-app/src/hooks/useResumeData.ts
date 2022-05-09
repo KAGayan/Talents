@@ -15,6 +15,7 @@ interface ResumeData {
     designations?: Designation[];
     academicQualification?: Qualification[];
     professionalQualification?: Qualification[];
+    maximumEducationLevel?: Qualification;
 }
 
 export const useResumeData = () => {
@@ -46,6 +47,7 @@ export const useResumeData = () => {
     const professionalQualification = await apiService.Resume.getProfessionalQualification(id);
     const designations = await apiService.Resume.getDesignations(id);
     const sk = await apiService.Resume.getSkills(id);
+    const maximumEducationLevel = await apiService.Resume.getMaximumEducationLevel();
 
     setResumeData({
       ...resumeData,
@@ -53,6 +55,7 @@ export const useResumeData = () => {
       professionalQualification,
       designations,
       skills: sk,
+      maximumEducationLevel,
       isOthersLoaded: true,
     });
   };
