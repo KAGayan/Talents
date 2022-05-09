@@ -4,9 +4,9 @@ import {
 } from 'types';
 
 export const Resume = {
-  get: () => apiRequest.post<ResumeRespons>(
-    '/resume',
-    {},
+  get: (userId: string) => apiRequest.post<ResumeRespons>(
+    '/CurriculumVitae/resume',
+    { empId: userId },
   ),
   getSectors: () => apiRequest.get<Sector[]>(
     '/CurriculumVitae/LoadSector',
@@ -22,5 +22,12 @@ export const Resume = {
   ),
   getSkills: (sectorId: string) => apiRequest.get<Skill[]>(
     `/CurriculumVitae/LoadSkill?sectorId=${sectorId}`,
+  ),
+  save: (userId: string, body: ResumeRespons) => apiRequest.post<ResumeRespons>(
+    'CurriculumVitae/save',
+    {
+      empId: userId,
+      curriculum: body,
+    },
   ),
 };

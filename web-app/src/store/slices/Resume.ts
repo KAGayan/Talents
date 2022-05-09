@@ -4,8 +4,8 @@ import { Resume } from 'types';
 
 export const getResume = createAsyncThunk(
   'resume/get',
-  async () => {
-    const resume = await apiService.Resume.get();
+  async (userId: string) => {
+    const resume = await apiService.Resume.get(userId);
     return resume;
   },
 );

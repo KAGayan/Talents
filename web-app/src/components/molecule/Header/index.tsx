@@ -28,7 +28,7 @@ export const Header = ({ name }: Props) => {
 
   const download = () => {
     handleClose();
-    if (resume) ResumeDownload(name, resume);
+    if (resume) ResumeDownload(resume);
   };
 
   return (
@@ -60,7 +60,7 @@ export const Header = ({ name }: Props) => {
               color="inherit"
               onClick={handleClick}
             >
-              {name}
+              {resume?.profile?.firstname || name}
             </Button>
             <Avatar
               sx={{
@@ -69,7 +69,7 @@ export const Header = ({ name }: Props) => {
                 marginLeft: 1,
               }}
             >
-              {name.charAt(0)}
+              {resume?.profile?.firstname?.charAt(0) || name.charAt(0)}
             </Avatar>
             <Menu
               id="basic-menu"
@@ -83,10 +83,14 @@ export const Header = ({ name }: Props) => {
               <MenuItem onClick={handleClose}>Profile</MenuItem>
               <MenuItem
                 onClick={() => navigate(APPLICANT_PATHS.editResume)}
+                disabled={!resume}
               >
                 Edit CV
               </MenuItem>
-              <MenuItem onClick={download}>
+              <MenuItem
+                disabled={!resume}
+                onClick={download}
+              >
                 Download CV
               </MenuItem>
               <MenuItem

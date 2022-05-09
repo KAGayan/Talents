@@ -24,7 +24,7 @@ export const PageContainer = ({ children, compact, showBackBtn }: Props) => {
       ...classes.container,
     }}
     >
-      {auth?.isAuthenticated && <Header name={`${user?.firstName}`} />}
+      {auth?.isAuthenticated && <Header name={`${user?.userName}`} />}
       {showBackBtn && (
       <Stack
         position="fixed"

@@ -26,7 +26,14 @@ export interface Qualification {
     typeId: string;
 }
 
+export interface Profile {
+    firstname?: string;
+    lastName?: string;
+    contactNumber?: string;
+    address?: string;
+ }
 export interface Resume {
+    profile?: Profile;
     sector?: Sector;
     gCSEpassess?: number;
     skillsList?: Skill[];
