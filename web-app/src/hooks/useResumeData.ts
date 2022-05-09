@@ -5,6 +5,8 @@ import {
 } from 'types';
 
 interface ResumeData {
+    isSectorsLoaded: boolean;
+    isOthersLoaded: boolean;
     selectedSector?: Sector;
     sectors?: Sector[];
     skills?: Skill[];
@@ -14,11 +16,14 @@ interface ResumeData {
 }
 
 export const useResumeData = () => {
-  const [resumeData, setResumeData] = useState<ResumeData>({});
+  const [resumeData, setResumeData] = useState<ResumeData>({
+    isSectorsLoaded: false,
+    isOthersLoaded: false,
+  });
 
   const getSectors = async () => {
     const sectors = await apiService.Resume.getSectors();
-    setResumeData({ ...resumeData, sectors });
+    setResumeData({ ...resumeData, sectors, isSectorsLoaded: true });
   };
 
   useEffect(() => {
@@ -26,14 +31,20 @@ export const useResumeData = () => {
   }, []);
 
   const getDataBySector = async (id: string) => {
+    setResumeData({ ...resumeData, isOthersLoaded: false });
     const academicQualification = await apiService.Resume.getAcademicQualification(id);
-    setResumeData({ ...resumeData, academicQualification });
     const professionalQualification = await apiService.Resume.getProfessionalQualification(id);
-    setResumeData({ ...resumeData, professionalQualification });
     const designations = await apiService.Resume.getDesignations(id);
-    setResumeData({ ...resumeData, designations });
     const sk = await apiService.Resume.getSkills(id);
-    setResumeData({ ...resumeData, skills: sk });
+
+    setResumeData({
+      ...resumeData,
+      academicQualification,
+      professionalQualification,
+      designations,
+      skills: sk,
+      isOthersLoaded: true,
+    });
   };
 
   useEffect(() => {
