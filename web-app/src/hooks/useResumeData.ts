@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react';
 import {
   Designation, Qualification, Sector, Skill,
 } from 'types';
+import { useActions } from './useActions';
+import { useMappedState } from './useMappedState';
 
 interface ResumeData {
     isSectorsLoaded: boolean;
@@ -13,9 +15,12 @@ interface ResumeData {
     designations?: Designation[];
     academicQualification?: Qualification[];
     professionalQualification?: Qualification[];
+    maximumEducationLevel?: Qualification;
 }
 
 export const useResumeData = () => {
+  const { user: { user }, resume: { resume } } = useMappedState((state) => state);
+  const { getResume } = useActions();
   const [resumeData, setResumeData] = useState<ResumeData>({
     isSectorsLoaded: false,
     isOthersLoaded: false,
@@ -23,7 +28,13 @@ export const useResumeData = () => {
 
   const getSectors = async () => {
     const sectors = await apiService.Resume.getSectors();
-    setResumeData({ ...resumeData, sectors, isSectorsLoaded: true });
+    user?.id && getResume(user.id);
+    setResumeData({
+      ...resumeData,
+      sectors,
+      isSectorsLoaded: true,
+      selectedSector: resume?.sector,
+    });
   };
 
   useEffect(() => {
@@ -36,6 +47,7 @@ export const useResumeData = () => {
     const professionalQualification = await apiService.Resume.getProfessionalQualification(id);
     const designations = await apiService.Resume.getDesignations(id);
     const sk = await apiService.Resume.getSkills(id);
+    const maximumEducationLevel = await apiService.Resume.getMaximumEducationLevel();
 
     setResumeData({
       ...resumeData,
@@ -43,6 +55,7 @@ export const useResumeData = () => {
       professionalQualification,
       designations,
       skills: sk,
+      maximumEducationLevel,
       isOthersLoaded: true,
     });
   };
