@@ -1,5 +1,5 @@
 import {
-  Card, CardContent, CardHeader, Typography,
+  Card, CardContent, CardHeader,
 } from '@mui/material';
 import { ReactElement, ReactNode } from 'react';
 

@@ -5,7 +5,7 @@ import {
 import { Box } from '@mui/system';
 import { ListItemContainer, Loader, PageContainer } from 'components/molecule';
 import { useActions, useMappedState } from 'hooks';
-import { Profiler, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
 import { APPLICANT_PATHS } from 'routes';
 import { Experience } from './Experience';
