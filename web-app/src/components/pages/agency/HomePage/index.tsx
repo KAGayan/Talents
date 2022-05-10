@@ -7,6 +7,7 @@ import { Loader, PageContainer } from 'components/molecule';
 import { useMappedState } from 'hooks';
 import { useState } from 'react';
 import { Filters, Resume } from 'types';
+import { Designation } from './Designation';
 import { EducationalQualification } from './EducationalQualification';
 import { EducationLevel } from './EducationLevel';
 import { Experience } from './Experience';
@@ -50,6 +51,11 @@ export const AgencyHomePage = () => {
         <SectorsSelect
           selectedId={filters?.sectorId || ''}
           onSelect={(id) => setfilters({ ...filters, sectorId: id })}
+        />
+        <Designation
+          selectedId={filters?.designationId || ''}
+          onSelect={(id) => setfilters({ ...filters, designationId: id })}
+          sectorId={filters?.sectorId}
         />
         <SkillsSelect
           selectedId={filters?.skillId || ''}
