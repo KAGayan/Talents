@@ -1,6 +1,7 @@
 using Catel.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -48,7 +49,8 @@ namespace Talent
                                           ;
                                   });
             });
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
+           services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +60,11 @@ namespace Talent
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.Use((context, next) =>
+            {
+                context.Request.EnableBuffering();
+                return next();
+            });
             app.UseRouting();
 
             //app.UseCors();

@@ -55,14 +55,21 @@ namespace Talent.Controllers
         [HttpPost]
         [ActionName("login")]
         [HttpPost("login")]
-        public Models.TaskStatus login(String username, String password){//(dynamic username, dynamic password){//(HttpRequestMessage data){ // (String username, String password)//([FromBody] dynamic data)  //([FromForm] LogTemp data)
-        //{
-        //    String username = data.username;
-        //    String password = data.password;
-          //  String username = "d";
-           // String password = "d";
-          // string sValue1 = username;
-           // string sValue2 = password;
+        public Models.TaskStatus login(String username, String password)
+        {//(dynamic username, dynamic password){//(HttpRequestMessage data){ // (String username, String password)//([FromBody] dynamic data)  //([FromForm] LogTemp data)
+                                                        //{
+                                                        //    String username = data.username;
+                                                        //    String password = data.password;
+                                                        //  String username = "d";
+                                                        // String password = "d";
+                                                        // string sValue1 = username;
+                        
+            // logTemp.password = "abcdefg9";
+            //logTemp.username = "applicantcheck2@gmail.com";// string sValue2 = password;
+            //var password = logTemp.password;
+            //var username = logTemp.username;
+           
+
 
             //return listEmp.First(e => e.ID == id);  
             SqlDataReader reader = null;
