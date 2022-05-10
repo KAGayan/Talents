@@ -1,6 +1,6 @@
 import { apiRequest } from 'api';
 import {
-  Designation, Qualification, Resume as ResumeRespons, Sector, Skill,
+  Designation, Filters, Qualification, Resume as ResumeRespons, Sector, Skill,
 } from 'types';
 
 export const Resume = {
@@ -31,6 +31,19 @@ export const Resume = {
     {
       empId: userId,
       curriculum: body,
+    },
+  ),
+  findTalents: (body: Filters) => apiRequest.post<ResumeRespons[]>(
+    'CurriculumVitae/filter',
+    {
+      secId: body.sectorId,
+      jobId: body.skillId,
+      eduLevelId: body.maximumEducationLevelId,
+      gcsePasses: body.gCSEpassess,
+      eduQualId: body.academicQualificationId,
+      professionalQualId: body.professionalQualificationId,
+      skillId: body.sectorId,
+      experienceId: body.experienceYears,
     },
   ),
 };

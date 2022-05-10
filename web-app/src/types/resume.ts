@@ -42,3 +42,13 @@ export interface Resume {
     professionalQualification?: Qualification[];
     maximumEducationLevel?: Qualification;
 }
+
+export interface Filters {
+    sectorId?: string;
+    skillId?: string;
+    experienceYears?: number;
+    gCSEpassess?: number;
+    maximumEducationLevelId?: string;
+    academicQualificationId?: string;
+    professionalQualificationId?: string;
+}
