@@ -176,7 +176,7 @@ namespace TalentAPI.Controllers
 
         [HttpGet]
         // [ActionName("GetEmployeeByID")]
-        [HttpPost("LoadSkill")]
+        [HttpGet("LoadSkill")]
         public List<Skill> LoadSkill(int sectorId)
         {
             //return listEmp.First(e => e.ID == id);  
@@ -207,6 +207,7 @@ namespace TalentAPI.Controllers
         [HttpPost]
         [ActionName("saved")]
         [HttpPost("saved")]
+
         public Talent.Models.TaskStatus save(String username, String password) //([FromBody] dynamic data)
         {
             //return listEmp.First(e => e.ID == id);  
@@ -258,11 +259,6 @@ namespace TalentAPI.Controllers
             return Status;
 
         }
-
-
-        // [ActionName("resume")]
-        // [HttpPost("resume")]
-       
        
         //[HttpPost]
         [HttpPost("resume")]
@@ -445,7 +441,7 @@ namespace TalentAPI.Controllers
         [HttpPost]
         [ActionName("save")]
         [HttpPost("save")]
-       
+        [Consumes("multipart/form-data")]
         public Talent.Models.cv save(int empId, cv curriculum)//(HttpRequest request) //([FromBody] dynamic data)
         {
             // cv curriculumVitae = resume(1017);curriculumVitae
@@ -497,27 +493,7 @@ namespace TalentAPI.Controllers
                 sqlCmd.Parameters.AddWithValue("@MAX_GSCE", curriculumVitae.gCSEpassess);
                 sqlCmd.Parameters.AddWithValue("@SEC_ID", curriculumVitae.sector.id);
                 reader = sqlCmd.ExecuteReader();
-                //if (reader.Read())
-                //{
-                //    //while (reader.Read())
-                //    //{
-                //    emp = new profile();
-                //    emp.firstname = reader.GetValue(6).ToString();
-                //    emp.lastName = reader.GetValue(7).ToString();
-                //    emp.contactNumber = reader.GetValue(4).ToString();
-                //    emp.address = reader.GetValue(1).ToString();
-
-                //    Status.Successfull = 1;
-                //    Status.Message = "Successful login";
-                //    // }
-                //    curriculumVitae.profile = emp;
-                //    curriculumVitae.gCSEpassess = Convert.ToInt32(reader.GetValue(9));
-                //}
-                //else
-                //{
-                //    Status.Successfull = 0;
-                //    Status.Message = "Incorrect Username or Password";
-                //}
+               
                 myConnection.Close();
                 for(int i = 0; i < curriculumVitae.academicQualification.Count; i++)
                 {
@@ -569,118 +545,12 @@ namespace TalentAPI.Controllers
                     sqlCmd.CommandText = "INSERT INTO MODIFIED_EXPERIENCE (EMP_NUMBER,EXP_ID,JOB_ID,FROM_YEAR,TO_YEAR,TOTAL_EXP,DESCRIPTION) VALUES (@EMP_NUMBER,"+ curriculumVitae.experiences[i].id + ","+ curriculumVitae.experiences[i].designation.id + ","+ curriculumVitae.experiences[i].from + ","+ curriculumVitae.experiences[i].to + ","+ total + ",'"+ curriculumVitae.experiences[i].description + "')"; 
 
                    // sqlCmd.Parameters.AddWithValue("@EMP_NUMBER", empId);
-                   // sqlCmd.Parameters.AddWithValue("@SKILL_ID", curriculumVitae.experiences[i].id);
-                   // sqlCmd.Parameters.AddWithValue("@SKILL_ID", curriculumVitae.experiences[i].designation.id);
-                   // sqlCmd.Parameters.AddWithValue("@SKILL_ID", curriculumVitae.experiences[i].from);
-                   // sqlCmd.Parameters.AddWithValue("@SKILL_ID", curriculumVitae.experiences[i].to);
-                   // sqlCmd.Parameters.AddWithValue("@SKILL_ID", total);
-                   // sqlCmd.Parameters.AddWithValue("@SKILL_ID", curriculumVitae.experiences[i].description);
 
                     reader = sqlCmd.ExecuteReader();
 
                     myConnection.Close();
                 }
-                //myConnection.Open();
-                //sqlCmd.CommandText = education;
-
-                //reader = sqlCmd.ExecuteReader();
-                ////if (reader.Read())
-                ////{
-                //Sector tempsector = new Sector();
-
-                //while (reader.Read())
-                //{
-                //    edu = new educationQual();
-                //    edu.id = Convert.ToInt32(reader.GetValue(0));
-                //    edu.title = reader.GetValue(3).ToString();
-                //    edu.typeId = reader.GetValue(1).ToString();
-
-                //    tempsector.id = Convert.ToInt32(reader.GetValue(2));
-                //    tempsector.title = reader.GetValue(6).ToString();
-
-                //    Status.Successfull = 1;
-                //    Status.Message = "Successful login";
-                //    listacademic.Add(edu);
-
-                //}
-
-
-                //}
-                //else
-                //{
-                //    Status.Successfull = 0;
-                //    Status.Message = "Incorrect Username or Password";
-                //}
-                //curriculumVitae.sector = tempsector;
-                //curriculumVitae.academicQualification = listacademic;
-                //myConnection.Close();
-
-                //myConnection.Open();
-                //sqlCmd.CommandText = professional;
-
-                //reader = sqlCmd.ExecuteReader();
-
-                //while (reader.Read())
-                //{
-                //    prof = new professionalQual();
-                //    prof.id = Convert.ToInt32(reader.GetValue(0));
-                //    prof.title = reader.GetValue(2).ToString();
-                //    //edu.typeId = reader.GetValue(1).ToString();
-
-
-                //    Status.Successfull = 1;
-                //    Status.Message = "Successful login";
-                //    listprof.Add(prof);
-                //}
-                //curriculumVitae.professionalQualification = listprof;
-
-                //myConnection.Close();
-                //myConnection.Open();
-                //sqlCmd.CommandText = skillquery;
-
-                //reader = sqlCmd.ExecuteReader();
-
-                //while (reader.Read())
-                //{
-                //    skill = new Skill();
-                //    skill.id = Convert.ToInt32(reader.GetValue(0));
-                //    skill.title = reader.GetValue(2).ToString();
-                //    //edu.typeId = reader.GetValue(1).ToString();
-
-
-                //    Status.Successfull = 1;
-                //    Status.Message = "Successful login";
-                //    listskill.Add(skill);
-                //}
-
-                //curriculumVitae.skillsList = listskill;
-                //myConnection.Close();
-
-                //myConnection.Open();
-                //sqlCmd.CommandText = experiencequery;
-
-                //reader = sqlCmd.ExecuteReader();
-
-                //while (reader.Read())
-                //{
-                //    Job tempJob = new Job();
-                //    experience = new Experience();
-                //    experience.id = Convert.ToInt32(reader.GetValue(1));
-                //    tempJob.id = Convert.ToInt32(reader.GetValue(2));
-                //    tempJob.title = reader.GetValue(7).ToString();
-                //    experience.from = Convert.ToInt32(reader.GetValue(3));
-                //    experience.to = Convert.ToInt32(reader.GetValue(4));
-                //    experience.description = reader.GetValue(6).ToString();
-                //    //edu.typeId = reader.GetValue(1).ToString();
-                //    experience.designation = tempJob;
-
-                //    Status.Successfull = 1;
-                //    Status.Message = "Successful login";
-                //    listexperience.Add(experience);
-                //}
-
-                //curriculumVitae.experiences = listexperience;
-                //myConnection.Close();
+            
             }
             catch (Exception ex)
             {
@@ -751,27 +621,7 @@ namespace TalentAPI.Controllers
                 sqlCmd.Parameters.AddWithValue("@MAX_GSCE", curriculumVitae.gCSEpassess);
                 sqlCmd.Parameters.AddWithValue("@SEC_ID", curriculumVitae.sector.id);
                 reader = sqlCmd.ExecuteReader();
-                //if (reader.Read())
-                //{
-                //    //while (reader.Read())
-                //    //{
-                //    emp = new profile();
-                //    emp.firstname = reader.GetValue(6).ToString();
-                //    emp.lastName = reader.GetValue(7).ToString();
-                //    emp.contactNumber = reader.GetValue(4).ToString();
-                //    emp.address = reader.GetValue(1).ToString();
-
-                //    Status.Successfull = 1;
-                //    Status.Message = "Successful login";
-                //    // }
-                //    curriculumVitae.profile = emp;
-                //    curriculumVitae.gCSEpassess = Convert.ToInt32(reader.GetValue(9));
-                //}
-                //else
-                //{
-                //    Status.Successfull = 0;
-                //    Status.Message = "Incorrect Username or Password";
-                //}
+         
                 myConnection.Close();
 
                 myConnection.Open();
@@ -867,9 +717,9 @@ namespace TalentAPI.Controllers
             return curriculumVitae;
 
         }
-        [HttpGet]
+        [HttpPost]
         // [ActionName("GetEmployeeByID")]
-        [HttpGet("filter")]
+        [HttpPost("filter")]
         public List<cv> filter(int jobId=0, int secId=0, int eduLevelId=0, int gcsePasses= -1, int eduQualId=0, int professionalQualId=0, int skillId=0, int experienceId=0)
         {
             //return listEmp.First(e => e.ID == id);  

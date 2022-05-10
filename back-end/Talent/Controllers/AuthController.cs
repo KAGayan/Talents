@@ -22,7 +22,6 @@ namespace Talent.Controllers
             return View();
         }
 
-   
         [HttpGet]
        // [ActionName("GetEmployeeByID")]
         [HttpGet("GetEmployeeByID")]
@@ -55,9 +54,8 @@ namespace Talent.Controllers
         [HttpPost]
         [ActionName("login")]
         [HttpPost("login")]
-        public Models.TaskStatus login(String username, String password)
-        {//(dynamic username, dynamic password){//(HttpRequestMessage data){ // (String username, String password)//([FromBody] dynamic data)  //([FromForm] LogTemp data)
-                                                        //{
+        public Models.TaskStatus login(String username, String password){//(dynamic username, dynamic password){//(HttpRequestMessage data){ // (String username, String password)//([FromBody] dynamic data)  //([FromForm] LogTemp data)
+                                                      //{
                                                         //    String username = data.username;
                                                         //    String password = data.password;
                                                         //  String username = "d";
@@ -69,8 +67,6 @@ namespace Talent.Controllers
             //var password = logTemp.password;
             //var username = logTemp.username;
            
-
-
             //return listEmp.First(e => e.ID == id);  
             SqlDataReader reader = null;
             SqlConnection myConnection = new SqlConnection();
