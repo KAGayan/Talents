@@ -51,4 +51,5 @@ export interface Filters {
     maximumEducationLevelId?: string;
     academicQualificationId?: string;
     professionalQualificationId?: string;
+    designationId?: string;
 }
